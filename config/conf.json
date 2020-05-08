@@ -1,0 +1,10 @@
+{       
+    "dbpath": "D:\\code\\mobile-control\\db",
+    "workmode":"null",
+    "mail":{
+        "from_addr" : "xxxxx@189.cn",
+        "password" : "xxxxx",
+        "to_addr" : "xxxx@qq.com",
+        "smtp_server" : "smtp.189.cn"
+    }
+}
