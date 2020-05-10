@@ -1,5 +1,4 @@
 # 手机控制智能助手简介
-The project of controlling the mobile phone through the computer
 手机控制智能助手,通过电脑自动控制手机执行任务。
 # 基本原理
 这个开源手机群控助手软件是基于airtest开发的，通过adb和poco对手机进行控制。
