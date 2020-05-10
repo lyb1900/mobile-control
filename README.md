@@ -16,3 +16,18 @@
     - [ ] 支持闲鱼自动上下架
 
 - 有兴趣一起完善此开源软件可加微信17388075023
+
+# 目前没有exe版本，使用说明如下
+## 环境准备 
+安装python 3.6.5
+安装Airtest框架 pip install airtest
+安装poco框架 pip install pocoui
+安装开源聊天机器人ChatterBot pip install chatterbot
+安装百度OCR pip install baidu-aip
+
+## 运行
+1.手机打开发者模式，安装上https://github.com/lyb1900/mobile-control/tree/master/install软件，接上电脑
+2.运行 xywork.py
+3.手机上提示都允许
+4.开始工作
+
