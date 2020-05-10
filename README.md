@@ -1,4 +1,4 @@
-# 手机控制智能助手简价
+# 手机控制智能助手简介
 The project of controlling the mobile phone through the computer
 手机控制智能助手,通过电脑自动控制手机执行任务。
 # 基本原理
