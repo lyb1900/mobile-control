@@ -3,7 +3,8 @@ Description:
 version: 
 Author: lyb1900
 Date: 2020-08-16 20:52:00
-LastEditTime: 2020-08-23 20:29:41
+LastEditTime: 2020-08-23 20:29:41 
+ver: 2021-6-26 适配最新版微信 
 '''
 
 import unittest
@@ -80,13 +81,13 @@ class Xyvx():
             times = times - 1
             index = random.randint(0,7)
             sleep(index)
-            node = self.dev.poco("com.tencent.mm:id/g2s").child("android.widget.FrameLayout").child("android.widget.LinearLayout")\
-            .offspring("com.tencent.mm:id/fol").child("com.tencent.mm:id/fn9")
+            node = self.dev.poco("com.tencent.mm:id/iew").child("android.widget.FrameLayout").child("android.widget.LinearLayout")\
+                .offspring("com.tencent.mm:id/hzr").child("com.tencent.mm:id/hyd")
             if node.exists():
-                node = node[0].offspring("com.tencent.mm:id/fn8").offspring("com.tencent.mm:id/ik")
+                node = node[1].offspring("com.tencent.mm:id/hyc").offspring("com.tencent.mm:id/kn")
                 if node.exists():
                     node.click()
-                    zannode = self.dev.poco("com.tencent.mm:id/i9")
+                    zannode = self.dev.poco("com.tencent.mm:id/kb")
                     if zannode.exists():
                         if zannode.get_text() == "赞":
                             zannode.click()
