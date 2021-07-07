@@ -5,6 +5,7 @@ from airtest.core.android.adb import *
 from xyxy import *
 from xydb import *
 from xytalker import *
+from xyvx import *
 import os
 import subprocess
 import re
@@ -52,10 +53,11 @@ class XyDev():
         print("connect dev:" + uri + str(self.dev_index))
         self.poco = AndroidUiautomationPoco(self.dev)
         self.xyxy = XyXy(self,XyDev.db)
+        self.xyvx = Xyvx(self,XyDev.db)
         self.width, self.height = self.dev.get_current_resolution()
         self.resolution = (self.width, self.height)
-        self.dev.shell("am startservice ca.zgrs.clipper/.ClipboardService")
-        self.talker = XyTalker(self,self.poco)
+        #self.dev.shell("am startservice ca.zgrs.clipper/.ClipboardService")
+        #self.talker = XyTalker(self,self.poco)
     def devairop(self,op, str):
         set_current(self.sno)
         op(str)

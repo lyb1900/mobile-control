@@ -105,8 +105,41 @@ def talk_everytime():
         for dev in xyDevs:
             dev.xyxy.collectgoods("XXXX", "XXX", 1,3000,True, justsearch=True, message = "加入我的程序员互助鱼塘，置顶你的宝贝，复制这条消息后，打开闲鱼€bSrS1pgx2DS€后打开闲鱼(若是你已经收到过了，那打扰了)",towant = True)
         lock.release()
+def vxatme():
+    while(1):
+        sleep(10)
+        print("看看有没有at我")
+        lock.acquire()
+        for dev in xyDevs:
+            # dev.xyvx.atme()
+            dev.xyvx.dianzan(1000)
+        lock.release()
 
 #=============界面主程序开始==============
+def mainvx():
+    init()    
+    t1 =threading.Thread(target=vxatme)
+    t1.setName("vxatme")
+    t1.start()
+    ytm=tkinter.Tk() #创建Tk对象
+    ytm.title("手机控制智能助手") #设置窗口标题
+    ytm.geometry("600x600") #设置窗口尺寸
+    l1=tkinter.Label(ytm,text="$$$$$$$$WORK$$$$$$$$$") #标签
+    l1.pack() #指定包管理器放置组件
+    l2=tkinter.Label(ytm,text="手机序列号") #标签
+    l2.pack() #指定包管理器放置组件
+    theLB = tkinter.Listbox(ytm,width = 50)
+    theLB.pack(side='top', anchor='sw')
+    # 往列表里添加数据
+    for dev in xyDevs:
+        theLB.insert("end", dev.sno)
+    l1=tkinter.Label(ytm,text="操作命令") #标签
+    l1.pack() #指定包管理器放置组件
+    user_text=tkinter.Entry() #创建文本框
+    user_text.pack()
+    ytm.mainloop() #进入主循环
+
+
 def main():
     init()    
     t1 =threading.Thread(target=talk_everytime)
@@ -115,7 +148,7 @@ def main():
     ytm=tkinter.Tk() #创建Tk对象
     ytm.title("手机控制智能助手") #设置窗口标题
     ytm.geometry("600x600") #设置窗口尺寸
-    l1=tkinter.Label(ytm,text="目前开放闲鱼自动聊天功能，其他功能未开放使用") #标签
+    l1=tkinter.Label(ytm,text="$$$$$$$$WORK$$$$$$$$$") #标签
     l1.pack() #指定包管理器放置组件
     l2=tkinter.Label(ytm,text="手机序列号") #标签
     l2.pack() #指定包管理器放置组件
@@ -135,9 +168,9 @@ def main():
     ytm.mainloop() #进入主循环
 
 if __name__ == '__main__':
-    #main()
-    init() 
-    test()
+    mainvx()
+    # init() 
+    # test()
 
 
 
