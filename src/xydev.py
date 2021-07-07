@@ -46,7 +46,8 @@ class XyDev():
         self.dev = connect_device(uri)
         self.dev_index = XyDev.dev_index
         XyDev.dev_index = XyDev.dev_index + 1
-        dbpath = r"D:\code\mobile-control\{0}.db".format(self.sno)
+        #dbpath = r"D:\code\mobile-control\{0}.db".format(self.sno)
+        dbpath = r"D:\code\mobile-control\common.db"
         XyDev.db = Xydb(dbpath)
         print("connect dev:" + uri + str(self.dev_index))
         self.poco = AndroidUiautomationPoco(self.dev)
@@ -156,7 +157,7 @@ class XyDev():
 
     def devswipe(self, list):
         set_current(self.sno)
-        swipe(list)
+        swipe(list[0],list[1])
 
     def movePageDown(self):
         set_current(self.sno)

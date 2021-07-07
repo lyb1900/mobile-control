@@ -84,15 +84,16 @@ class Xyvx():
             node = self.dev.poco("com.tencent.mm:id/iew").child("android.widget.FrameLayout").child("android.widget.LinearLayout")\
                 .offspring("com.tencent.mm:id/hzr").child("com.tencent.mm:id/hyd")
             if node.exists():
-                node = node[1].offspring("com.tencent.mm:id/hyc").offspring("com.tencent.mm:id/kn")
-                if node.exists():
-                    node.click()
-                    zannode = self.dev.poco("com.tencent.mm:id/kb")
-                    if zannode.exists():
-                        if zannode.get_text() == "赞":
-                            zannode.click()
-                        else:
-                            print("是取消不要点")
+                if len(node) > 1:
+                    node = node[1].offspring("com.tencent.mm:id/hyc").offspring("com.tencent.mm:id/kn")
+                    if node.exists():
+                        node.click()
+                        zannode = self.dev.poco("com.tencent.mm:id/kb")
+                        if zannode.exists():
+                            if zannode.get_text() == "赞":
+                                zannode.click()
+                            else:
+                                print("是取消不要点")
             else:
                 print("node no find")
             swipe(self.rToA(0.5,0.8),self.rToA(0.5,0.5))

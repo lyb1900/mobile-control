@@ -1,3 +1,12 @@
+'''
+@Author: lyb1900
+@Date: 2020-05-08 21:29:52
+@LastEditTime: 2020-05-28 19:58:45
+@LastEditors: lyb1900
+@Description: 闲鱼操作类
+@lyb.19@qq.com欢迎讨论优化
+'''
+
 import unittest
 from poco.drivers.android.uiautomation import AndroidUiautomationPoco
 from airtest.core.api import *
@@ -46,33 +55,75 @@ class XyXy():
                         return 1
         else:
             return 1        
-                    
+             
     def goHome(self):
+        '''
+        @description: 用于各种异常情况回到主页
+        @param {type} 
+        @return: 
+        '''   
         if self.dev.isApp("com.taobao.idlefish") == False:
             self.dev.runApp("com.taobao.idlefish")
-            time.sleep(6)
+            # # 主页元素
+            # self.dev.poco.wait_for_all(
+            #     [self.dev.poco('闲鱼'), self.dev.poco('消息'), self.dev.poco('我的')])
+
             #self.dev.updatepoco()
+            
         self.detection()
         return self.pocoFind("home", 5)
         #while i < 5 :
         #    return 0
         #findPicArea()
 
+    def sign_app(self):
+        '''
+        @description: 应用签到(未调试)
+        @param {type} 
+        @return: 
+        '''    
+        # 点击进入到签到页面
+        self.dev.poco('闲鱼币, 签到换好礼').click()
 
-    def action_message(self):
+        element_has_signed = self.dev.poco(value='已签到')
+
+        if not element_has_signed:
+            self.dev.poco(value='马上签到').click()
+
+        print('应用签到成功!')
+
+        self.dev.poco.click([0.0703125, 0.06690140845070422])
+    
+    def action_want(self,msg):
+        node = self.dev.poco(text="我想要")
+        if node.exists():
+            node.click()
+            self.dev.poco("com.taobao.idlefish:id/pond_chat_box_content").click()
+            self.dev.text(msg)
+            sendnode = self.dev.poco("com.taobao.idlefish:id/chat_send_button")
+            if sendnode.exists():
+                sendnode.click()
+            self.dev.key("BACK")
+            self.dev.key("BACK")
+
+    def action_message(self,msg):
         node = self.dev.poco(text="留言")
         if node.exists():
             node.click()
             index = random.randint(0,7)
-            message = ["我也便宜出手机",
-            "同出，楼主优先",
-            "怎么没人看我的闲置手机呢",
-            "我也有手机，便宜出售",
-            "急出，我的手机更便宜些呢",
-            "看我的手机，我的更便宜些呢",
-            "这手机我也便宜出，楼主优先",
-            "我的手机也便宜出，楼主优先"]
-            self.dev.text(message[index])
+            if msg is "":
+                message = ["我也便宜出手机",
+                "同出，楼主优先",
+                "怎么没人看我的闲置手机呢",
+                "我也有手机，便宜出售",
+                "急出，我的手机更便宜些呢",
+                "看我的手机，我的更便宜些呢",
+                "这手机我也便宜出，楼主优先",
+                "我的手机也便宜出，楼主优先"]
+                self.dev.text(message[index])
+            else:
+                self.dev.text(msg)
+            
             sendnode = self.dev.poco("com.taobao.idlefish:id/send_button")
             if sendnode.exists():
                 sendnode.click()
@@ -164,16 +215,17 @@ class XyXy():
 
 
 
-    def collectciycle(self,goods,goodsname,toleavemessage):
-        for i in range(80):
+    def collectciycle(self,goods,goodsname,toleavemessage,message,towant):
+        for i in range(180):
             # poco = AndroidUiautomationPoco()
             # 闲鱼6.6.70之后的版本无法实时刷新，需要关闭再刷新
-            # 为了保证poco树能实时刷新，关闭pocoservcie，关闭后会被自动拉起
-            # dev.shell("am force-stop com.netease.open.pocoservice")
-            # sleep(4)
+            #为了保证poco树能实时刷新，关闭pocoservcie，关闭后会被自动拉起
+            self.dev.shell("am force-stop com.netease.open.pocoservice")
+            sleep(10)
             #poco = AndroidUiautomationPoco()
-
-            element=self.dev.poco(text=goods).parent().offspring()
+            # if  towant == True:
+            #     goods = r"\n\d+人想要"
+            element=self.dev.poco(textMatches=goods).parent().offspring()
             if element.exists():
                 j = 0
                 for name in element:
@@ -182,10 +234,12 @@ class XyXy():
 
                         if nodestr.lower().find("￥".lower())!=-1:
                             j = j + 1
-                            if self.db.match_gooodsname(nodestr,goodsname) == False:
+                            #如果message有值说明是要指定留言不是找商品的，不需要再完全匹配
+                            if message == "" and self.db.match_gooodsname(nodestr,goodsname) == False:
                                 if j == 4:
-                                    time.sleep(2)
-                                    name.swipe([-0.0977, -0.8247])
+                                    # time.sleep(2)
+                                    # name.swipe([-0.0977, -0.8247])
+                                    # j = 0
                                     break
                                 else:
                                     continue
@@ -221,7 +275,10 @@ class XyXy():
                                 if toleavemessage == False:
                                     name.click()
                                     time.sleep(2)
-                                    self.action_message()
+                                    if towant == True:
+                                        self.action_want(message)
+                                    else:
+                                        self.action_message(message)
                                     self.dev.key("BACK")
                                     toleavemessage = True
 
@@ -234,8 +291,9 @@ class XyXy():
                                     pos.click()
                                 else: 
                                     if j == 4:
-                                        time.sleep(2)
-                                        name.swipe([-0.0977, -0.8247])
+                                        # time.sleep(2)
+                                        # name.swipe([-0.0977, -0.8247])
+                                        # j = 0
                                         break
                                     else:
                                         continue
@@ -248,8 +306,9 @@ class XyXy():
                                     time.sleep(1)
                                 else: 
                                     if j == 4:
-                                        time.sleep(2)
-                                        name.swipe([-0.0977, -0.8247])
+                                        # time.sleep(2)
+                                        # name.swipe([-0.0977, -0.8247])
+                                        # j = 0
                                         break
                                     else:
                                         continue
@@ -267,18 +326,20 @@ class XyXy():
                             self.db.insert(goodsname,str(price),star, desc,urlstr,toleavemessage)
                             
                             if j >= 4:
-                                time.sleep(2)
-                                name.swipe([-0.0977, -0.8247])
+                                # time.sleep(2)
+                                # name.swipe([-0.0977, -0.8247])
+                                # j = 0
                                 break
                     else:
                         print("no get text")
-
+                
             else:
                 print("===no find===")
-        #swipe([-0.0977, -0.8247])
+            #self.dev.devswipe([-0.0977, -0.8247])
+            self.dev.poco.scroll(direction="vertical", percent=0.5, duration=1.0)
 
 
-    def collectgoods(self,goods, goodsname,lowprice, highprice,toleavemessage,justsearch = False):
+    def collectgoods(self,goods, goodsname,lowprice, highprice,toleavemessage,justsearch = False,message = "",towant= False):
         if self.goHome() != 0:
             print("没有找到家")
             return
@@ -311,7 +372,7 @@ class XyXy():
                 print("no find pic")
                 return
 
-        self.collectciycle(goods, goodsname, toleavemessage)
+        self.collectciycle(goods, goodsname, toleavemessage, message,towant)
 
     def collect_relategoods(self, goods, toleavemessage):
         if goods == "v10":

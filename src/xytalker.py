@@ -88,38 +88,51 @@ class XyTalker():
             return None
     
     def send_new_message(self,word):
-        price = self.poco("com.taobao.idlefish:id/tv_price").get_text()
-        robot = None
-        match = re.search(r"(¥\s)(\d+)", price)
-        if match:
-            matchprice = match.groups(0)[1]
-            print(match.groups(0)[1])
+        debug = True
+        if debug == True:
+                self.poco("com.taobao.idlefish:id/pond_chat_box_content").click()
+                
+                message = ["可以加到XXXX",
+                "XXXXX1",
+                "XXXXX2",
+                "XXXXX3"]
+                index = random.randint(0,len(message) - 1)
+                self.dev.text("[自动回答]" + message[index])
+                self.poco("com.taobao.idlefish:id/chat_send_button").click()
+                self.dev.key("BACK")
         else:
-            matchprice = 0
-            print("no match")
-        if (int(matchprice) < 120):
-            robot = self.m30robot
-        else:
-            self.poco("com.taobao.idlefish:id/pond_chat_box_content").click()
-            index = random.randint(0,7)
-            message = ["有的,可以拍",
-            "走平台交易保证安全",
-            "已经很优惠了，不用犹豫",
-            "还等什么呢",
-            "有货的，可以直接拍下",
-            "机子功能都是好的",
-            "可以看下描述",
-            "东西还不错的呢"]
-            self.dev.text("[自动回答]" + message[index])
-            self.poco("com.taobao.idlefish:id/chat_send_button").click()
-            self.dev.key("BACK")
-        if robot != None:
-            self.poco("com.taobao.idlefish:id/pond_chat_box_content").click()
-            rep = robot.get_response(word)
-            print("回答"+ rep.text)
-            self.dev.text("[自动回答]" + rep.text)
-            self.poco("com.taobao.idlefish:id/chat_send_button").click()
-            self.dev.key("BACK")
+            price = self.poco("com.taobao.idlefish:id/tv_price").get_text()
+            robot = None
+            match = re.search(r"(¥\s)(\d+)", price)
+            if match:
+                matchprice = match.groups(0)[1]
+                print(match.groups(0)[1])
+            else:
+                matchprice = 0
+                print("no match")
+            if (int(matchprice) < 120):
+                robot = self.m30robot
+            else:
+                self.poco("com.taobao.idlefish:id/pond_chat_box_content").click()
+                index = random.randint(0,7)
+                message = ["有的,可以拍",
+                "走平台交易保证安全",
+                "已经很优惠了，不用犹豫",
+                "还等什么呢",
+                "有货的，可以直接拍下",
+                "机子功能都是好的",
+                "可以看下描述",
+                "东西还不错的呢"]
+                self.dev.text("[自动回答]" + message[index])
+                self.poco("com.taobao.idlefish:id/chat_send_button").click()
+                self.dev.key("BACK")
+            if robot != None:
+                self.poco("com.taobao.idlefish:id/pond_chat_box_content").click()
+                rep = robot.get_response(word)
+                print("回答"+ rep.text)
+                self.dev.text("[自动回答]" + rep.text)
+                self.poco("com.taobao.idlefish:id/chat_send_button").click()
+                self.dev.key("BACK")
     
     def talk(self):
         try:
