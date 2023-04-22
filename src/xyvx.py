@@ -4,7 +4,7 @@ version:
 Author: lyb1900
 Date: 2020-08-16 20:52:00
 LastEditTime: 2020-08-23 20:29:41 
-ver: 2021-6-26 适配最新版微信 
+ver: 2023-1-1 适配最新版微信 
 '''
 
 import unittest
@@ -18,6 +18,7 @@ import traceback
 from tkinter import messagebox
 import tkinter
 import tkinter.simpledialog
+from xyutil import *
 # 
 class Xyvx():
     dev_index = 0
@@ -37,7 +38,6 @@ class Xyvx():
         
     def __str__(self):  # 其实一般可能都是这样简单用一下的
         pass
-
 
     def goHome(self):
         '''
@@ -81,19 +81,29 @@ class Xyvx():
             times = times - 1
             index = random.randint(0,7)
             sleep(index)
-            node = self.dev.poco("com.tencent.mm:id/iew").child("android.widget.FrameLayout").child("android.widget.LinearLayout")\
-                .offspring("com.tencent.mm:id/hzr").child("com.tencent.mm:id/hyd")
+            node = self.dev.poco("com.tencent.mm:id/kai").child("android.widget.FrameLayout").child("android.widget.LinearLayout").offspring("com.tencent.mm:id/jv8").child("com.tencent.mm:id/nq_")
             if node.exists():
                 if len(node) > 1:
-                    node = node[1].offspring("com.tencent.mm:id/hyc").offspring("com.tencent.mm:id/kn")
+                    node = node[1].offspring("com.tencent.mm:id/nh")
                     if node.exists():
                         node.click()
-                        zannode = self.dev.poco("com.tencent.mm:id/kb")
+                        #XyUtil.findAndClickPic(r"tpl1636284766692.png",resolution=(self.width, self.height))
+                        
+                        #按图片查找
+                        #try:
+                        #    touch(Template(r"zan2.png",  resolution=(self.width, self.height)))
+                        #    print("在手机屏幕找到zan")
+                        #except TargetNotFoundError:
+                        #    print("没找到zan")
+                        
+                        #按text查找
+                        zannode = self.dev.poco("com.tencent.mm:id/n4")
                         if zannode.exists():
-                            if zannode.get_text() == "赞":
-                                zannode.click()
-                            else:
-                                print("是取消不要点")
+                           if zannode.get_text() == "赞":
+                               print("点赞")
+                               zannode.click()
+                           else:
+                               print("是取消不要点")
             else:
                 print("node no find")
             swipe(self.rToA(0.5,0.8),self.rToA(0.5,0.5))
@@ -137,7 +147,7 @@ def main():
     vxdb = "no db"
     xyvx = Xyvx(dev,vxdb,poco)
     #xyvx.atme()
-    xyvx.dianzan(100)
+    xyvx.dianzan(1001)
     # while(1):
     #     sleep(10)
     #     xylp.huntnew()
