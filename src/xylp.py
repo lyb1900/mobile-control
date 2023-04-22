@@ -143,10 +143,10 @@ class XyLp():
             user.click()
 
             sleep(1)
-            company_node = self.dev.poco("com.lietou.mishu:id/aoto_company_positon")
+            company_node = self.dev.poco("com.lietou.mishu:id/company_positon")
             if company_node.exists():
                 huntuser.company = company_node.get_text()
-            state_node =  self.dev.poco("com.lietou.mishu:id/tv_job_state")
+            state_node =  self.dev.poco("com.lietou.mishu:id/working_status")
             if state_node.exists():
                 huntuser.state =state_node.get_text()
             email_node = self.dev.poco("com.lietou.mishu:id/tv_email")
@@ -155,16 +155,21 @@ class XyLp():
             work_node = self.dev.poco("com.lietou.mishu:id/tv_work_dese")
             if work_node.exists():
                 huntuser.des = work_node.get_text()
-            for onelabel in self.dev.poco("com.lietou.mishu:id/tv_label_text"):
-                huntuser.label = huntuser.label+ " " + onelabel.get_text()
+            #for onelabel in self.dev.poco("com.lietou.mishu:id/tv_label_text"):
+            #    huntuser.label = huntuser.label+ " " + onelabel.get_text()
             
-            self.dev.poco("com.lietou.mishu:id/btn_submit").click()
+            if self.db.insert(huntuser) == 0 :
+                print("user exist do nothing")
+            else:
+                print("talking")
+                self.dev.poco("com.lietou.mishu:id/sms_center").click()
+                sleep(1)
+                self.dev.poco("com.lietou.mishu:id/chat_left_group").click()
+                sleep(1)    
             sleep(1)
-            self.dev.poco("com.lietou.mishu:id/chat_left_group").click()
+            self.dev.poco("com.lietou.mishu:id/back").click()
             sleep(1)
-            self.dev.poco("com.lietou.mishu:id/ib_menu_back").click()
-            sleep(1)
-            self.db.insert(huntuser)
+
             print(user.get_text())
         # for user in nodelist:
 

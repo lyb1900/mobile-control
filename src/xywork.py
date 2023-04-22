@@ -168,7 +168,8 @@ def main():
     ytm.mainloop() #进入主循环
 
 if __name__ == '__main__':
-    mainvx()
+    #mainvx()
+    main()
     # init() 
     # test()
 

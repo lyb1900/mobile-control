@@ -48,7 +48,7 @@ class XyDev():
         self.dev_index = XyDev.dev_index
         XyDev.dev_index = XyDev.dev_index + 1
         #dbpath = r"D:\code\mobile-control\{0}.db".format(self.sno)
-        dbpath = r"D:\code\mobile-control\common.db"
+        dbpath = r"D:\xywork\common.db"
         XyDev.db = Xydb(dbpath)
         print("connect dev:" + uri + str(self.dev_index))
         self.poco = AndroidUiautomationPoco(self.dev)
@@ -166,21 +166,7 @@ class XyDev():
         #self.dev = device()
         swipe(self.rToA(0.5,0.1),self.rToA(0.5,0.8))
 
-    # def findAndClickPic(pic):
-    #     try:
-    #         touch(Template(pic, resolution))
-    #         print("在手机屏幕找到" + pic)
-    #         return 0
-    #     except TargetNotFoundError:
-    #         print("没找到"+ pic)
-    #         return 1
 
-    # def findPicArea(pic, x, y):
-    #     ret = exists(Template(pic, record_pos=(x, y), resolution = resolution))
-    #     if ret == False: 
-    #         return 1
-    #     else:
-    #         return 0
 
 
 
